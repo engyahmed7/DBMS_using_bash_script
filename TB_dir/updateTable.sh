@@ -11,29 +11,35 @@ if [[ -z "$tbname" || "$tbname" =~ [/.:\\-] ]]; then
 elif [[ ! -f "$table_file" ]]; then
     echo "Error: Table $tbname does not exist."
 else
+    while true; do
+        read -p "Enter primary key value: " primary_key_value
 
-    read -p "Enter primary key value: " primary_key_value
+        columnName=$(grep ":pk" "$table_file" | cut -d: -f1)
+        col_line_number=$(grep -n "^$columnName:" "$table_file" | cut -d: -f1)
+        typeset -i i=1
+        key_found=false
 
-    columnName=$(grep ":pk" "$table_file" | cut -d: -f1)
-    col_line_number=$(grep -n "^$columnName:" "$table_file" | cut -d: -f1)
-    typeset -i i=1
-    while true
-    do
-        if [[ $primary_key_value == $(sed -n "${i}p" "$records_file" | cut -d: -f$col_line_number) ]]; then
-            record=$(sed -n "${i}p" "$records_file")
+        while true; do
+            if [[ $primary_key_value == $(sed -n "${i}p" "$records_file" | cut -d: -f$col_line_number) ]]; then
+                key_found=true
+                record=$(sed -n "${i}p" "$records_file")
+                break
+            fi
+
+            ((i++))
+        done
+
+        if [[ "$key_found" == "true" ]]; then
             break
-	else
-		echo "Primary key is not found"
-		exit
+        else
+            echo "Primary key not found. Please enter a valid primary key."
         fi
-        ((i++))
     done
 
     # Select Single Column
     read -p "Enter column to update: " column_to_update
     col_line_number=$(grep -n "^$column_to_update:" "$table_file" | cut -d: -f1)
     dtype=$(grep  "^$column_to_update:" "$table_file" | cut -d: -f2)
-     
 
     if [[ -n "$col_line_number" ]]; then
         read -p "Enter new value for $column_to_update: " new_val
