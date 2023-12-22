@@ -7,14 +7,12 @@ valid_dbname() {
   [[ -n "$1" && ! "$1" =~ [/.:\\-] ]]
 }
 
-db_exist() {
+db_exists() {
   [ -d "$HOME/$script_dir/db_dir/$1" ]
 }
 
-if valid_dbname "$dbname"
-then
-  if db_exist "$dbname"
-  then
+if valid_dbname "$dbname"; then
+  if db_exists "$dbname"; then
     echo "Error: The Database $dbname already exists."
   else
     mkdir -p "$HOME/$script_dir/db_dir/$dbname" && echo "The DB $dbname is created successfully."
