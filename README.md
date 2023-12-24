@@ -85,11 +85,10 @@ By organizing the project files into the `DBMS` folder, you create a clean struc
 
 Check out a quick demo of the Bash Shell DBMS in action:
 
-[![Demo Video](https://your-image-link.jpg)](https://drive.google.com/file/d/15ZicPYmxo4iSjCX_L3FkyfgahY3S9v3v/view?usp=sharing)
-
-Click the image above to watch the demo.
+[![Demo Video](https://drive.google.com/file/d/15ZicPYmxo4iSjCX_L3FkyfgahY3S9v3v/view?usp=sharing)
 
 Feel free to explore the features and functionalities of the DBMS! 🚀
+
 
 ## Notes
 
